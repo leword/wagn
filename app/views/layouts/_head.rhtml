@@ -16,7 +16,8 @@
 	<%= stylesheet_link_merged :base %> 
   <%#= asset_manager can do alternate media but it has to be a separate call anyway %>
 	<%= stylesheet_link_tag 'print', :media=>'print' %>
-
+                                                     
+	<%= syntax_css('blackboard') %>
 	<%# tried javascript at bottom, much breakage %>
   <%= javascript_include_merged :base %>       
 
