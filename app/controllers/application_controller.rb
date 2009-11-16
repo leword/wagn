@@ -39,6 +39,7 @@ class ApplicationController < ActionController::Base
     end
 
     CachedCard.set_cache_prefix "#{System.host}/#{RAILS_ENV}"
+    Wagn.cache = Wagn::Cache.new Rails.cache, "#{System.host}/#{RAILS_ENV}" 
     
     # Set/Redirect to Canonical Domain
     if request.raw_host_with_port != System.host and RAILS_ENV=="production"

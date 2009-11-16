@@ -22,6 +22,7 @@ module Wagn
         load_cardlib
         load_cardtypes
         load_modules
+        initialize_cache
         initialize_builtin_cards
       end
         
@@ -79,6 +80,10 @@ module Wagn
         Wagn::Module.load_all
       end
           
+      def initialize_cache
+        Wagn.cache = Wagn::Cache.new Rails.cache, "#{System.host}/#{RAILS_ENV}" 
+      end
+      
       def initialize_builtin_cards    
         ## DEBUG
         File.open("#{RAILS_ROOT}/log/wagn.log","w") do |f|
