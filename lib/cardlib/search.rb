@@ -1,7 +1,8 @@
 module Cardlib
   module Search
     module ClassMethods
-      @@builtins = {}
+      mattr_accessor :builtin_cards
+      self.builtin_cards = {}
 
       def find_builtin(name)
         key=name.to_key
@@ -12,13 +13,13 @@ module Cardlib
           }
         case 
           when searches[key]; create_virtual(name, searches[key], 'Search')
-          when @@builtins[key]; @@builtins[key]
+          when builtin_cards[key]; builtin_cards[key]
         end
       end
       
       def add_builtin(card)     
         card.builtin = true
-        @@builtins[card.key] = card
+        builtin_cards[card.key] = card
       end
       
       def find_virtual(name)  

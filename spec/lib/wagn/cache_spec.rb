@@ -3,8 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Wagn::Cache do
   before :each do
     @store = ActiveSupport::Cache::MemoryStore.new
-    Wagn::Cache.should_receive("generate_cache_id").and_return("cache_id")
-    @cache = Wagn::Cache.new @store, "prefix"
+    Wagn::Cache::Main.should_receive("generate_cache_id").and_return("cache_id")
+    @cache = Wagn::Cache::Main.new @store, "prefix"
   end
   
   it "reads" do
@@ -23,8 +23,13 @@ describe Wagn::Cache do
     @cache.fetch("fetch", &block)
   end     
   
+  it "deletes" do
+    @store.should_receive(:delete).with("prefix/cache_id/foo")
+    @cache.delete "foo"
+  end
+  
   it "resets" do    
-    Wagn::Cache.should_receive("generate_cache_id").and_return("cache_id2")
+    Wagn::Cache::Main.should_receive("generate_cache_id").and_return("cache_id2")
     @cache.write("foo","bar")
     @cache.read("foo").should == "bar"
     @cache.reset

@@ -1,6 +1,10 @@
 require_dependency 'slot_helpers'
 
 class Slot
+  cattr_accessor :cache 
+  cattr_accessor :cache_keys
+  self.cache_keys = [ :view_content, :line_content, :footer ]
+  
   include SlotHelpers  
   cattr_accessor :max_char_count
   self.max_char_count = 200
@@ -133,17 +137,11 @@ class Slot
     end
   end
   
-  def cache_action(cc_method) 
-    (if CachedCard===card 
-      card.send(cc_method) || begin
-        cached_card, @card = card, Card.find_by_key_and_trash(card.key, false) || raise("Oops! found cached card for #{card.key} but couln't find the real one") 
-        content = yield(@card)
-        cached_card.send("#{cc_method}=", content.clone)  
-        content
-      end
-    else
-      yield(card)
-    end).clone
+  def cache_action(viewname)
+    raise "invalid slot cache key '#{viewname}'" unless self.class.cache_keys.include?(viewname)
+    Slot.cache.fetch( "#{card.key}/#{viewname}" ) do
+      yield
+    end
   end
   
   def deny_render?(action)

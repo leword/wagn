@@ -38,8 +38,10 @@ module Cardlib
     end
     
     def expire(card)  
-      #warn "expiring #{card.name}"
-      CachedCard.new(card.key).expire_all
+      #warn "expiring #{card.name}"      
+      Wagn::Cache.expire_card card.key 
+      #CachedCard.new(card.key).expire_all
+      #Card.cache.delete card.key 
     end
     
     def self.included(base)   

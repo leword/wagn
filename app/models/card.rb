@@ -1,4 +1,4 @@
 module Card
 end  
 
-Wagn::Initializer.load
+#Wagn::Initializer.load

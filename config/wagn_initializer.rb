@@ -17,6 +17,12 @@ module Wagn
         }     
       end
 
+      def run
+        ActionController::Dispatcher.prepare_dispatch do
+          Wagn::Initializer.load
+        end
+      end
+
       def load  
         load_config  
         load_cardlib
@@ -63,6 +69,7 @@ module Wagn
           include Cardlib::Settings
           extend Cardlib::CardAttachment::ActMethods  
         end                                      
+        Cardlib::Fetch
       end
       
       def load_cardtypes
@@ -81,7 +88,9 @@ module Wagn
       end
           
       def initialize_cache
-        Wagn.cache = Wagn::Cache.new Rails.cache, "#{System.host}/#{RAILS_ENV}" 
+        Wagn.cache = Wagn::Cache::Main.new Rails.cache, "#{System.host}/#{RAILS_ENV}" 
+        Card.cache = Wagn::Cache::Base.new Wagn.cache, "card"
+        Slot.cache = Wagn::Cache::Base.new Wagn.cache, "view"
       end
       
       def initialize_builtin_cards    
