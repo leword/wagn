@@ -1,9 +1,13 @@
 module Cardlib
   module ModuleMethods    
-    def new(args={})
+    def new(args={}) 
       args=args.stringify_keys unless args.nil?   
       p = Proc.new {|k| k.new(args)}
-      c=with_class_from_args(args,p)  
+      if args['missing']
+        c = Card::Basic.new(args)
+      else
+        c=with_class_from_args(args,p)  
+      end
     
       # autoname.  note I'm not sure that this is the right place for this at all, but 
       #  :set_needed_defaults returns if new_record? so I think we don't want it in there

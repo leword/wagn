@@ -49,7 +49,11 @@ module Cardlib
         fetch( cardname ) or Card.new( opts )
       end                                    
       
-      def fetch_real cardname, opts={}
+      def fetch_real cardname, opts={}     
+        File.open("#{RAILS_ROOT}/log/wagn.log","w") do |f|
+          f.puts "fetch #{cardname}"
+        end
+        
         opts[:skip_auto] = true
         fetch cardname, opts
       end

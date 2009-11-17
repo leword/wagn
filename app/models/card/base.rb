@@ -57,7 +57,7 @@ module Card
     #  couldn't we create initialize_with_defaults and chain it?
     def set_needed_defaults
       # new record check because create callbacks are also called in type transitions 
-      return if (!new_record? || skip_defaults? || virtual? || @defaults_already_set)  
+      return if (!new_record? || missing? || virtual? || @defaults_already_set)  
       @defaults_already_set = true
       set_defaults
       #replace_content_variables
@@ -400,11 +400,12 @@ module Card
     end
 
     # Dynamic Attributes ------------------------------------------------------        
-    def skip_defaults?
-      # when Calling Card.new don't set defaults.  this is for performance reasons when loading
-      # missing cards. 
-      !!skip_defaults
-    end
+    # def skip_defaults?
+    #   # when Calling Card.new don't set defaults.  this is for performance reasons when loading
+    #   # missing cards. 
+    #   !!skip_defaults
+    # end
+    # 
 
     def virtual?
       @virtual || @builtin

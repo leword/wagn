@@ -35,7 +35,12 @@ describe Card do
     it "returns and does not cache virtual cards" do
       # code for this is written.  lazed on test.
       pending
+    end          
+    
+    it "does not recurse infinitively on template templates" do
+      Card.fetch("*rform+*rform").should be_nil
     end
+    
   end
   
   context "cached cards" do
