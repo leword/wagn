@@ -2,7 +2,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Card do
   before do
-    User.as(:wagbot)
+    User.as(:wagbot)  
+    Wagn.cache.reset
   end
   
   context "settings" do
@@ -18,7 +19,8 @@ describe Card do
     end                                                                 
     
     it "retrieves single values" do
-      Card.create :name => "banana+*self+*edit", :content => "pebbles"
+      Card.create! :name => "banana+*+*edit", :type=>'Phrase', :content => "pebbles"
+      Card["banana+*+*edit"].should be_instance_of(Card::Phrase)
       Card["banana"].setting('edit').should == "pebbles"
     end
   end
