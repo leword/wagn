@@ -9,33 +9,55 @@
 module Wagn
   mattr_accessor :cache
 
-  module Cache    
+  module Cache
     class Base
       def initialize( store, prefix )
         @store = store
+        @local = Hash.new
         @prefix = prefix + '/'
       end
     
-      def read key
-        @store.read( @prefix + key )
+      def read key 
+        fetch_local( key ) do
+          @store.read( @prefix + key )
+        end
       end
     
       def write key, value
+        @local[key] = value
         @store.write( @prefix + key, value )
       end
     
-      def fetch key, &block
-        @store.fetch( @prefix + key, &block )
+      def fetch key, &block   
+        fetch_local( key ) do 
+          @store.fetch( @prefix + key, &block )
+        end
       end   
       
       def delete key
+        @local.delete key
         @store.delete( @prefix + key )
       end             
+         
+      def reset_local
+        @local = {}
+      end
+      
+      private
+      def fetch_local key
+        if @local.has_key?(key)
+          @local[key]    
+        else
+          val = yield
+          @local[key] = val
+        end
+      end
     end
     
     class Main < Base
       def initialize( store, prefix )
-        @store = store
+        @store = store   
+        @local = Hash.new
         @original_prefix = prefix + '/'
         @cache_id = @store.fetch( @original_prefix + "cache_id" ) do
           self.class.generate_cache_id
@@ -44,6 +66,7 @@ module Wagn
       end
     
       def reset                                    
+        reset_local
         @cache_id = self.class.generate_cache_id
         @store.write( @original_prefix + "cache_id", @cache_id )
         @prefix = @original_prefix + @cache_id + "/"
