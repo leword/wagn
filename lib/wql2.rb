@@ -154,8 +154,8 @@ module Wql2
     def to_card(relative_name)
       case relative_name
       when "_self";  root.card                                   
-      when "_left";  CachedCard.get(root.card.name.parent_name)
-      when "_right"; CachedCard.get(root.card.name.tag_name)
+      when "_left";  Card.fetch(root.card.name.parent_name)
+      when "_right"; Card.fetch(root.card.name.tag_name)
       end
     end
     
@@ -217,7 +217,7 @@ module Wql2
       #cards = val=~/^_/ ? [to_card(val)] : Card.search(val)
       cards = case
           when val=~/^_/;    [to_card(val)]
-          when String===val; [CachedCard.get(val)]
+          when String===val; [Card.fetch(val)]
           else;              Card.search(val)
         end  
       cards.each do |c|

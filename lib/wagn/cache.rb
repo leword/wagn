@@ -62,7 +62,7 @@ module Wagn
 
       # legacy                             
       begin
-        CachedCard.get( key ).expire_all
+        Card.fetch( key ).expire_all
       rescue
       end
     end

@@ -252,7 +252,7 @@
 * fix image upload on new cards
 * fix search paging
 * hack around broken permissions on serch templates
-* fix builtin card omission in CachedCard.get changes
+* fix builtin card omission in Card.fetch changes
 * set version to 0.9.1
 * footer, template from cache, &amp; other optimizations
 * fix recent changes dates

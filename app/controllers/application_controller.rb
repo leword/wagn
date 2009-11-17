@@ -147,7 +147,7 @@ class ApplicationController < ActionController::Base
       name=""
     end
     card_params = params[:card] ? params[:card].clone : nil
-    @card = CachedCard.get(name, @card, :cache=>cache, :card_params=>card_params )
+    @card = Card.fetch(name, @card, :cache=>cache, :card_params=>card_params )
     @card
   end
                 

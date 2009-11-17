@@ -332,7 +332,7 @@ class Slot
               when @state==:edit
                 (Card.find_by_name( fullname ) || Card.find_virtual( fullname ) ||  Card.new( cargs ))
               else
-                CachedCard.get fullname
+                Card.fetch fullname
               end
         
             #warn("sending these options for processing: #{options.inspect}")

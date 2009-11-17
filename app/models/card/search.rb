@@ -29,7 +29,7 @@ module Card
       self.spec = get_spec(params.clone)
       raise("OH NO.. no limit") unless self.spec[:limit]
       self.results = Card.search( self.spec ).map do |card|   
-        c = CachedCard.get(card.name, card)
+        c = Card.fetch(card.name, card)
       end
     end
     

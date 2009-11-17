@@ -39,7 +39,7 @@ class System < ActiveRecord::Base
 
     def setting(name)
       User.as :wagbot  do
-        card=CachedCard.get_real(name) and !card.content.strip.empty? and card.content
+        card=Card.fetch_real(name) and !card.content.strip.empty? and card.content
       end
     rescue
       nil
@@ -54,16 +54,16 @@ class System < ActiveRecord::Base
       User.as(:wagbot) do      
         if ( 
               cardname.present? and 
-              layout_card = CachedCard.get_real(cardname) and 
+              layout_card = Card.fetch_real(cardname) and 
               layout_card.ok?(:read)
             )
           layout_card
         elsif (
-              c = CachedCard.get_real("*layout")             and
+              c = Card.fetch_real("*layout")             and
               c.type == 'Pointer'                            and
               layout_name=c.pointee                          and
               !layout_name.nil?                              and
-              layout_card = CachedCard.get_real(layout_name) and
+              layout_card = Card.fetch_real(layout_name) and
               layout_card.ok?(:read)
             ) 
           layout_card

@@ -44,7 +44,7 @@ module Notification
     def trunk_watcher_watched_pairs
       # do the watchers lookup before the transcluder test since it's faster.
       if (name.junction? and 
-          pairs = CachedCard.get("#{name.trunk_name}").watcher_watched_pairs and
+          pairs = Card.fetch("#{name.trunk_name}").watcher_watched_pairs and
           transcluders.include?(trunk))
         pairs
       else
@@ -77,7 +77,7 @@ module Notification
     end
     
     def pointees_from( cardname )
-      (c = CachedCard.get(cardname)) ? c.pointees.reject{|x|x==''} : []
+      (c = Card.fetch(cardname)) ? c.pointees.reject{|x|x==''} : []
     end  
       
     def watchers

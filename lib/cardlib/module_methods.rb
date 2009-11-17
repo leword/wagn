@@ -10,7 +10,7 @@ module Cardlib
       if args["name"].blank?
         ::User.as(:wagbot) do
           autoname_cardname = ::Cardtype.name_for(c.type)+"+*autoname" 
-          if CachedCard.get_real autoname_cardname
+          if Card.fetch_real autoname_cardname
             autoname_card = Card[autoname_cardname]
             c.name = autoname_card.content
             autoname_card.content = autoname_card.content.next

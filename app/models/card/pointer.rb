@@ -4,7 +4,7 @@ module Card
     class << self
       def options_card(tagname)
         card = ::User.as(:wagbot) do
-	        CachedCard.get_real("#{tagname}+*options")
+	        Card.fetch_real("#{tagname}+*options")
 	      end
 	      (card && card.type=='Search') ? card : nil
 	    end
@@ -31,7 +31,7 @@ module Card
 	    
 	  def option_text(option)
 	    name = System.setting('*option label') || System.setting("#{self.name.tag_name}+*option label") || 'description'
-	    textcard = CachedCard.get_real(option+'+'+name)
+	    textcard = Card.fetch_real(option+'+'+name)
 	    textcard ? textcard.content : nil
 	  end
 	    

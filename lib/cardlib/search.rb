@@ -74,7 +74,7 @@ module Cardlib
             spec[:append]  &&= spec[:append].to_absolute(context_name)
           end
           results = results.map do |card|             
-            CachedCard.get [spec[:prepend], card.name, spec[:append]].compact.join('+')
+            Card.fetch [spec[:prepend], card.name, spec[:append]].compact.join('+')
           end
         end
         results

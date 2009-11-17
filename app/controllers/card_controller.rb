@@ -41,7 +41,7 @@ class CardController < ApplicationController
     if (@card_name.nil? or @card_name.empty?) then    
       @card_name = System.site_title
     end             
-    @card = CachedCard.get(@card_name)
+    @card = Card.fetch(@card_name)
 
     if @card.new_record? && !@card.virtual?
       params[:card]={:name=>@card_name, :type=>params[:type]}
@@ -76,7 +76,7 @@ class CardController < ApplicationController
     if args[:type]
       if args[:type].blank?
         args.delete(:type) 
-      elsif ct=CachedCard.get_real(args[:type])    
+      elsif ct=Card.fetch_real(args[:type])    
         args[:type] = ct.name 
       end
     end
