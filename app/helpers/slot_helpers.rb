@@ -102,7 +102,7 @@ module SlotHelpers
   end
             
   def footer_links
-    cache_action('footer') { 
+    cache_view(:footer) { 
       render_partial( 'card/footer_links' )   # this is ugly reusing this cache code
     }
   end     

@@ -137,7 +137,7 @@ class Slot
     end
   end
   
-  def cache_action(viewname)
+  def cache_view(viewname)
     raise "invalid slot cache key '#{viewname}'" unless self.class.cache_keys.include?(viewname)
     Slot.cache.fetch( "#{card.key}/#{viewname}" ) do
       yield
@@ -229,10 +229,10 @@ class Slot
 
       when :expanded_view_content, :naked, :raw # raw is DEPRECATED
         @state = 'view'
-        expand_transclusions(  cache_action('view_content') {  card.post_render( render(:open_content)) } )
+        expand_transclusions(  cache_view(:view_content) {  card.post_render( render(:open_content)) } )
 
       when :expanded_line_content
-        expand_transclusions(  cache_action('line_content') { render(:closed_content) } )
+        expand_transclusions(  cache_view(:line_content) { render(:closed_content) } )
 
 
       #-----( without transclusions processed )
