@@ -38,7 +38,6 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    CachedCard.set_cache_prefix "#{System.host}/#{RAILS_ENV}"
     Wagn::Initializer.initialize_cache
     
     # Set/Redirect to Canonical Domain
@@ -57,7 +56,6 @@ class ApplicationController < ActionController::Base
     User.clear_cache if System.multihost
     Cardtype.reset_cache
     Role.reset_cache
-    CachedCard.reset_cache
     System.request = request 
     #System.time = Time.now.to_f              
     load_location
@@ -147,8 +145,7 @@ class ApplicationController < ActionController::Base
       name=""
     end
     card_params = params[:card] ? params[:card].clone : nil
-    @card = Card.fetch(name, @card, :cache=>cache, :card_params=>card_params )
-    @card
+    @card ||= Card.fetch_or_new name, card_params
   end
                 
   def load_card_and_revision

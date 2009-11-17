@@ -39,14 +39,12 @@ Spork.each_run do
   # This code will be run each time you run your specs.
   require 'cucumber/rails/world'   
   require 'email_spec/cucumber'
- 
-  CachedCard.set_cache_prefix "#{System.host}/test"
-  CachedCard.bump_global_seq
-  CachedCard.set_cache_prefix "#{System.host}/cucumber"
-  CachedCard.bump_global_seq
 
+  Wagn::Cache::Main.new( Rails.cache, "#{System.host}/test" ).reset
+  Wagn::Cache::Main.new( Rails.cache, "#{System.host}/cucumber" ).reset
+         
   Before do
-    CachedCard.bump_global_seq
+    Wagn.cache.reset
   end 
    
   Cucumber::Rails::World.use_transactional_fixtures = true    

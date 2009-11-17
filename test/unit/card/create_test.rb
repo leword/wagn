@@ -1,9 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 class Card::CreateTest < ActiveSupport::TestCase
-  
-  def setup
-    setup_default_user
-  end
   def test_find_or_create_when_present
     Card.create!(:name=>"Carrots")
     assert_no_difference Card, :count do 

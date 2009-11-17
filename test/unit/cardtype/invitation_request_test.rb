@@ -1,9 +1,8 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 class Card::InvitationRequestTest < ActiveSupport::TestCase
   
-  
   def setup
-    setup_default_user  
+    super
     # make sure all this stuff works as anonymous user
     ::User.current_user = ::User.find_by_login('anon')
   end

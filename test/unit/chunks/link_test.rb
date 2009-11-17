@@ -3,10 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../../test_helper')
 class LinkTest < ActiveSupport::TestCase
   include ChunkTestHelper
   
-  def setup
-    setup_default_user
-  end
-  
   def test_basic
     card = newcard('Baines', '[[Nixon]]')
     assert_equal('<a class="wanted-card" href="/wagn/Nixon">Nixon</a>', render(card) )

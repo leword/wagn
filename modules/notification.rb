@@ -123,7 +123,6 @@ module Notification
   def self.init
     Card::Base.send :include, CardMethods
     Card::Base.send :include, CacheableMethods  
-    CachedCard.send :include, CacheableMethods 
     Slot.send :include, SlotHelperMethods 
     self.extend Hooks 
   end   

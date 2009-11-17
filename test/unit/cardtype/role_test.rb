@@ -1,11 +1,6 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 class Card::RoleTest < ActiveSupport::TestCase
-  
-  
-  def setup
-    setup_default_user
-  end
-  
+    
   def test_role_creation
     assert_instance_of Card::Role, @c=Card::Role.create( :name=>'BananaMaster' )  
     assert_instance_of ::Role, @c.extension, "extension immediate"

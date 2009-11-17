@@ -58,7 +58,7 @@ module Cardlib
       @name_changed = true          
       @old_name = oldname
       @search_content_changed=true 
-      if cc=CachedCard.find(@old_name.to_key) then Wagn::Cache.expire_card( @old_name.to_key ) end  # clear cache of old name.
+      Wagn::Cache.expire_card( @old_name.to_key ) # clear cache of old name.
     end
 
     def set_type(new_type)

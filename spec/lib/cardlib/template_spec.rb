@@ -3,7 +3,6 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Card, "with hard tag template" do
   before do
-    CachedCard.reset_cache
     User.as :joe_user
     @bt = Card.create! :name=>"birthday+*rform", :extension_type=>'HardTemplate',
       :type=>'Date', :content=>"Today!"
@@ -41,8 +40,6 @@ end
 
 describe Card, "with soft tag template" do
   before do 
-    CachedCard.reset_cache
-    CachedCard.bump_global_seq
     User.as :wagbot  do
       @bt = Card.create! :name=>"birthday+*rform", :type=>'Date', :content=>"Today!"
       @bt.permit(:comment, Role['auth']);  @bt.permit(:delete, Role['admin'])

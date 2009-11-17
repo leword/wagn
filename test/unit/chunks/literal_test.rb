@@ -3,11 +3,6 @@ require File.expand_path(File.dirname(__FILE__) + '/../../test_helper')
 class LiteralTest < ActiveSupport::TestCase
   include ChunkTestHelper
   
-  
-  def setup
-    setup_default_user
-  end
-  
   def test_literal_link
     card = newcard('Instructions', '/* type this: [[link]] */')
     assert_equal('<code> type this: [[link]] </code>', render(card) )

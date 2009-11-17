@@ -1,8 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 class CardnameTest < ActiveSupport::TestCase
-  def setup
-  end
-    
   def test_valid
     assert "this+THAT".valid_cardname?
 #    assert !"Tho_se".valid_cardname?

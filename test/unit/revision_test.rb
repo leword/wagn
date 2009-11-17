@@ -1,10 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper'
 class RevisionTest < ActiveSupport::TestCase
   
-  def setup
-    setup_default_user
-  end
-  
   def test_revise
     author1, author2 = User.find(:all, :limit=>2)
     User.current_user = author1

@@ -7,7 +7,8 @@ class MailerTest < ActiveSupport::TestCase
 
   include ActionMailer::Quoting
 
-  def setup
+  def setup     
+    super
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
@@ -37,7 +38,6 @@ class MailerTest < ActiveSupport::TestCase
       user =  ::User.find_by_login('sara')
       card =  Card["Sunglasses"]
       action = "edited"  
-      CachedCard.bump_global_seq    
       Mailer.deliver_change_notice( user, card, action, card.name )
     end
 
@@ -47,7 +47,6 @@ class MailerTest < ActiveSupport::TestCase
     
     context "change notice message" do
       setup do  
-        CachedCard.bump_global_seq    
         @mail = ActionMailer::Base.deliveries[0]
       end
       should "be addressed to users email" do

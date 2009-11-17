@@ -3,6 +3,7 @@ class Card::BaseTest < ActiveSupport::TestCase
   
   def setup           
     ::User.as(:u3)  # FIXME!!! wtf?  this works and :admin doesn't
+    super
   end
          
   def test_autocard_should_not_respond_to_tform 

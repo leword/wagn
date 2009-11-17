@@ -1,8 +1,5 @@
 require File.dirname(__FILE__) + '/../test_helper'
 class WagnRubyTest < ActiveSupport::TestCase
-  def setup
-  end
-  
   def test_hash_from_semicolon_attr_list  
     assert_equal( {}, Hash.new_from_semicolon_attr_list("") )
     assert_equal( {}, Hash.new_from_semicolon_attr_list(nil) )

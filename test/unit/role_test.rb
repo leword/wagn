@@ -4,7 +4,7 @@ class RoleTest < ActiveSupport::TestCase
   include PermissionTestHelper
   
   def setup
-    setup_default_user
+    super
     @anon = Role.find_by_codename("anon")
     @auth = Role.find_by_codename("auth")
     @admin_r = Role.find_by_codename("admin")

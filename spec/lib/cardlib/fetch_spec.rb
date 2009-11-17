@@ -55,8 +55,8 @@ describe Card do
     
     it "expire when dependents are updated" do
       # several more cases of expiration really should be tested.
-      # they're not tested under CachedCard and the hook to call Card.cache expirations
-      # is essentially the same.
+      # they were not previously tested under and the hook to call Card.cache expirations
+      # is essentially the same as the old way.
       pending
     end
   end

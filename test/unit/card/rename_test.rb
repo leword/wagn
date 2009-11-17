@@ -21,7 +21,7 @@ class Card::RenameTest < ActiveSupport::TestCase
       
       Card.create! :type=>"Cardtype", :name=>"Dairy", :content => "[[/new/{{_self|name}}|new]]"
     end
-    setup_default_user                 
+    super                 
   end
   
   def test_rename_name_substitution

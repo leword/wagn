@@ -1,13 +1,6 @@
 require File.dirname(__FILE__) + '/../test_helper' 
 
 class WikiReferenceTest < ActiveSupport::TestCase
-             
-  
-  def setup
-    setup_default_user  
-    CachedCard.bump_global_seq
-  end
-
   def test_hard_templated_card_should_insert_references_on_create
     Card::UserForm.create! :name=>"JoeForm"
     Slot.new(Card["JoeForm"]).render(:naked_content)

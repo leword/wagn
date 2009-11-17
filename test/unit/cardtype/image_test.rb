@@ -4,12 +4,6 @@ class Card::ImageTest < ActiveSupport::TestCase
   require 'action_controller'
   require 'action_controller/test_process.rb'
   
-  
-  
-  def setup
-    setup_default_user
-  end
-  
   def test_image_creation
     path = "#{RAILS_ROOT}/test/fixtures/mao2.jpg"
     mimetype = "image/jpeg"

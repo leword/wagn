@@ -27,7 +27,8 @@ module Wagn
         load_config  
         load_cardlib
         load_cardtypes
-        load_modules
+        load_modules     
+        initialize_multihost
         initialize_cache
         initialize_builtin_cards
       end
@@ -87,6 +88,18 @@ module Wagn
       def load_modules
         Wagn::Module.load_all
       end
+          
+      def initialize_multihost
+        # set schema for multihost wagns   (make sure this is AFTER loading wagn.rb duh)             
+        #ActiveRecord::Base.logger.info("------- multihost = #{System.multihost} and WAGN_NAME= #{ENV['WAGN']} -------")
+        if System.multihost and ENV['WAGN']    
+          if mapping = MultihostMapping.find_by_wagn_name(ENV['WAGN'])
+            System.base_url = "http://" + mapping.canonical_host
+            System.wagn_name = mapping.wagn_name
+          end
+          ActiveRecord::Base.connection.schema_search_path = ENV['WAGN']
+        end  
+      end    
           
       def initialize_cache
         Wagn.cache = Wagn::Cache::Main.new Rails.cache, "#{System.host}/#{RAILS_ENV}" 

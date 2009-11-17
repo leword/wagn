@@ -27,7 +27,7 @@ class PermissionTest < ActiveSupport::TestCase
   include ::PermissionTestHelper
   
   def setup
-    setup_default_user 
+    super 
     @u1, @u2, @u3 = %w( u1 u2 u3 ).map do |x| ::User.find_by_login(x) end
     @r1, @r2, @r3 = %w( r1 r2 r3 ).map do |x| ::Role.find_by_codename(x) end
     @c1, @c2, @c3 = %w( c1 c2 c3 ).map do |x| Card.find_by_name(x) end

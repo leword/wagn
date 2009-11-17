@@ -1,9 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 class Card::PointerTest < ActiveSupport::TestCase       
-  def setup 
-    User.as :joe_user
-  end
-  
   context "add_reference" do
     should "add to empty ref list" do
       @pointer = Card.new :name=>"tp", :type=>"pointer", :content=>""

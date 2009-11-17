@@ -1,9 +1,7 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 class Card::RemoveTest < ActiveSupport::TestCase
-  
-
   def setup
-    setup_default_user
+    super
     @a = Card.find_by_name("A")
   end
 

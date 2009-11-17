@@ -328,12 +328,7 @@ class Slot
               cargs[:content] = specified_content
             end
 
-            tcard = case
-              when @state==:edit
-                (Card.find_by_name( fullname ) || Card.find_virtual( fullname ) ||  Card.new( cargs ))
-              else
-                Card.fetch fullname
-              end
+            tcard = Card.fetch_or_new fullname, cargs
         
             #warn("sending these options for processing: #{options.inspect}")
        

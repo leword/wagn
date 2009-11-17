@@ -8,10 +8,6 @@ class TransclusionTest < ActiveSupport::TestCase
   include ChunkTestHelper
   include ActionView::Helpers::TextHelper
   
-  def setup
-    setup_default_user
-  end  
-              
   def test_truth
     assert true
   end

@@ -40,14 +40,8 @@ unless defined? TEST_ROOT
     # then set this back to true.
     self.use_instantiated_fixtures  = false
   
-    
-    CachedCard.set_cache_prefix "#{System.host}/test"
-    CachedCard.bump_global_seq
-    CachedCard.set_cache_prefix "#{System.host}/cucumber"
-    CachedCard.bump_global_seq
-
-
-    
+    Wagn::Cache::Main.new( Rails.cache, "#{System.host}/test" ).reset
+    Wagn::Cache::Main.new( Rails.cache, "#{System.host}/cucumber" ).reset
   end
 
   class ActiveSupport::TestCase      

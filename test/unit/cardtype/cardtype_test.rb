@@ -1,10 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 class Card::CardtypeTest < ActiveSupport::TestCase
-  
-  def setup
-    setup_default_user
-  end
-  
   def test_should_not_allow_cardtype_remove_when_instances_present
     Card::Cardtype.create :name=>'City'
     city = Card::Cardtype.find_by_name('City')

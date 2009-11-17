@@ -44,7 +44,8 @@ module Cardlib
         card
       end   
       
-      def fetch_or_new cardname, opts={}
+      def fetch_or_new cardname, *args
+        opts = args.extract_options!
         opts[:name] ||= cardname
         fetch( cardname ) or Card.new( opts )
       end                                    

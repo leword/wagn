@@ -41,7 +41,7 @@ class CardController < ApplicationController
     if (@card_name.nil? or @card_name.empty?) then    
       @card_name = System.site_title
     end             
-    @card = Card.fetch(@card_name)
+    @card = Card.fetch_or_new(@card_name)
 
     if @card.new_record? && !@card.virtual?
       params[:card]={:name=>@card_name, :type=>params[:type]}
@@ -82,7 +82,7 @@ class CardController < ApplicationController
     end
 
     # if given a name of a card that exists, got to edit instead
-    if args[:name] and CachedCard.exists?(args[:name])
+    if args[:name] and Card.fetch(args[:name])
       render :text => "<span class=\"faint\">Oops, <strong>#{args[:name]}</strong> was recently created! try reloading the page to edit it</span>"
       return
     end
@@ -275,7 +275,7 @@ class CardController < ApplicationController
     sources = [card.cardtype.name,nil]
     sources.unshift '*account' if card.extension_type=='User' 
     @items = sources.map do |root| 
-      c = CachedCard[(root ? "#{root}+" : '') +'*related']
+      c = Card.fetch((root ? "#{root}+" : '') +'*related')
       c && c.type=='Pointer' && c.pointees
     end.flatten.compact
     @items << 'config'
