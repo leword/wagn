@@ -110,7 +110,7 @@ class CachedCard
         end
       end
     end
-
+    
     # FIXME: didn't write test because not sure how Cache testing interacts with test data
     #  potential rabbit-hole.
     def exists?(name)
@@ -159,6 +159,11 @@ class CachedCard
     @attrs = nil 
     @key=key
   end
+  
+  def cacheable?
+    true
+  end
+
   
   def exists?
     !!(read('name') || read('content'))

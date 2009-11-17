@@ -30,7 +30,7 @@ module Cardlib
     end
     
     def cacheable?
-      return true
+      !builtin? and !virtual?
     end
     
     def post_render( content )

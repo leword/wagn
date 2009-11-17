@@ -139,7 +139,11 @@ class Slot
   
   def cache_view(viewname)
     raise "invalid slot cache key '#{viewname}'" unless self.class.cache_keys.include?(viewname)
-    Slot.cache.fetch( "#{card.key}/#{viewname}" ) do
+    if card.cacheable?
+      Slot.cache.fetch( "#{card.key}/#{viewname}" ) do
+        yield
+      end
+    else 
       yield
     end
   end
