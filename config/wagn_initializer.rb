@@ -58,8 +58,6 @@ module Wagn
           include Cardlib::AttributeTracking
         end
         
-        Cardlib::ModuleMethods #load
-
         Card::Base.class_eval do                            
           include Cardlib::TrackedAttributes
           include Cardlib::Templating
@@ -82,6 +80,10 @@ module Wagn
           rescue Exception=>e
             raise "Error loading card/#{cardtype}: #{e.message}"
           end
+        end    
+        ::Cardtype.load_cache if ::Cardtype.cache.empty?        
+        ::Cardtype.cache[:class_names].values.each do |classname|
+          Card.create_card_class( classname ) unless Card.const_defined?( classname )
         end
       end
 

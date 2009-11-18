@@ -295,7 +295,7 @@ class Slot
       return content.gsub(/\{\{/,'{<bogus />{').gsub(/\}\}/,'}<bogus />}')
     end
     #content = "noskip(#{card.name}):" + content
-    content.gsub!(Chunk::Transclude::TRANSCLUDE_PATTERN) do  
+    content.gsub(Chunk::Transclude::TRANSCLUDE_PATTERN) do  
       if @state==:line && self.char_count > Slot.max_char_count
         ""
       else 
@@ -349,7 +349,6 @@ class Slot
         end
       end
     end  
-    content     
   end
      
   def render_partial( partial, locals={} )
