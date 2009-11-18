@@ -28,9 +28,7 @@ module Card
       self.search_opts = params  
       self.spec = get_spec(params.clone)
       raise("OH NO.. no limit") unless self.spec[:limit]
-      self.results = Card.search( self.spec ).map do |card|   
-        c = Card.fetch(card.name, card)
-      end
+      self.results = Card.search( self.spec )
     end
     
     def get_spec(params={})

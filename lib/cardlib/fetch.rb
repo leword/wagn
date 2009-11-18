@@ -27,13 +27,16 @@ module Cardlib
       def fetch cardname, opts = {}      
         key = cardname.to_key
 
-        card = Card.cache.read( key )   if perform_caching?
+        if perform_caching?
+          card = Card.cache.read( key )   
+          wasnt_cached = true if card.nil?
+        end
         card = Card.find_builtin( key ) unless card || opts[:skip_auto]
         card = Card.find_virtual( key ) unless card || opts[:skip_auto]
         card = Card.find_by_key( key )  unless card
         card = Card.new( :name => cardname, :missing => true ) unless card     
 
-        if perform_caching? and !card.builtin? and !card.virtual? 
+        if wasnt_cached and !card.builtin? and !card.virtual? 
           Card.cache.write key, card
         end
 
@@ -51,10 +54,6 @@ module Cardlib
       end                                    
       
       def fetch_real cardname, opts={}     
-        File.open("#{RAILS_ROOT}/log/wagn.log","w") do |f|
-          f.puts "fetch #{cardname}"
-        end
-        
         opts[:skip_auto] = true
         fetch cardname, opts
       end
