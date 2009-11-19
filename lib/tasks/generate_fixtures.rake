@@ -56,7 +56,9 @@ namespace :test do
       # Rake::Task['db:drop'].invoke
       # Rake::Task['db:create'].invoke
       # Rake::Task['db:schema:load'].invoke
-      # Rake::Task['wagn:bootstrap:load'].invoke
+      # Rake::Task['wagn:bootstrap:load'].invoke        
+      puts "rake cache:clear"
+      puts `rake cache:clear`
       puts "rake db:drop"
       puts `rake db:drop`
       puts "rake db:create"
@@ -81,6 +83,7 @@ namespace :test do
     # go ahead and load the fixtures into the test database
     
     puts ">> preparing test database"
+    puts `rake cache:clear`    
     puts `rake db:test:load`
     puts ">> loading test fixtures"
     puts `rake db:fixtures:load RAILS_ENV=test`

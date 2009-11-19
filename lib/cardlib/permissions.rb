@@ -199,7 +199,12 @@ module Cardlib
         deny_because you_cant("set permissions" )
       end
     end
-    
+   
+    def permissions_with_validation=(perms)
+      raise 'Insufficient permissions specifications' if perms.length < 3        
+      permission_without_validation = perms
+    end
+   
     def self.included(base)   
       super
       base.extend(ClassMethods)
@@ -209,6 +214,7 @@ module Cardlib
         alias_method_chain :destroy!, :permissions  
         alias_method_chain :save, :permissions
         alias_method_chain :save!, :permissions
+        alias_method_chain :permissions=, :validation
       end
     end
   end
