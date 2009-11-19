@@ -1,11 +1,5 @@
 require File.dirname(__FILE__) + '/../../test_helper'
 class Card::BaseTest < ActiveSupport::TestCase
-  
-  def setup
-    setup_default_user     
-    Wagn.cache.reset
-  end
-
   def test_remove
     forba = Card.create! :name=>"Forba"
     torga = Card.create! :name=>"TorgA"

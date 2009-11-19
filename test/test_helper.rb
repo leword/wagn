@@ -41,7 +41,12 @@ unless defined? TEST_ROOT
     self.use_instantiated_fixtures  = false
   
     Wagn::Cache::Main.new( Rails.cache, "#{System.host}/test" ).reset
-    Wagn::Cache::Main.new( Rails.cache, "#{System.host}/cucumber" ).reset
+    Wagn::Cache::Main.new( Rails.cache, "#{System.host}/cucumber" ).reset     
+    
+    def setup
+      setup_default_user     
+      Wagn.cache.reset
+    end
   end
 
   class ActiveSupport::TestCase      
