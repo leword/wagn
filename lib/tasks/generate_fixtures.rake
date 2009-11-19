@@ -57,9 +57,13 @@ namespace :test do
       # Rake::Task['db:create'].invoke
       # Rake::Task['db:schema:load'].invoke
       # Rake::Task['wagn:bootstrap:load'].invoke
+      puts "rake db:drop"
       puts `rake db:drop`
+      puts "rake db:create"
       puts `rake db:create`
+      puts "rake db:schema:load"
       puts `rake db:schema:load`
+      puts "rake wagn:bootstrap:load"
       puts `rake wagn:bootstrap:load`       
   
       # I spent waay to long trying to do this in a less hacky way--  
