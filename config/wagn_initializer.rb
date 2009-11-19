@@ -22,10 +22,18 @@ module Wagn
           Wagn::Initializer.load
         end
       end
+      
+      def pre_schema?
+        ActiveRecord::Base.connection.execute("select * from cards")
+        return false
+      rescue ActiveRecord::StatementInvalid
+        return true
+      end
 
       def load  
         load_config  
-        load_cardlib
+        load_cardlib           
+        return if pre_schema?
         load_cardtypes
         load_modules     
         initialize_multihost
@@ -81,9 +89,14 @@ module Wagn
             raise "Error loading card/#{cardtype}: #{e.message}"
           end
         end    
-        ::Cardtype.load_cache if ::Cardtype.cache.empty?        
-        ::Cardtype.cache[:class_names].values.each do |classname|
-          Card.create_card_class( classname ) unless Card.const_defined?( classname )
+        begin
+          ::Cardtype.load_cache if ::Cardtype.cache.empty?        
+          ::Cardtype.cache[:class_names].values.each do |classname|
+            Card.create_card_class( classname ) unless Card.const_defined?( classname )
+          end
+        rescue
+          # this fails on bootstrap if the schema is not present in DB yet.
+          # ok to just go on.
         end
       end
 
